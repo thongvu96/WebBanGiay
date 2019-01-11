@@ -56,7 +56,7 @@ public class CustomerController {
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
 		mav.addObject("showProduct", showProduct);
-		
+
 		Sort sort = new Sort();
 		mav.addObject("sort", sort);
 		return mav;
@@ -79,35 +79,37 @@ public class CustomerController {
 	}
 
 	// Sắp xếp product theo giá
-//	@RequestMapping(value="/sort", method = RequestMethod.POST)
-//	public ModelAndView listProductByPrice(@RequestParam(required = false, name = "sorting") String sorting) {
-//
-//		// String sorting = request.getParameter("sorting");
-//		System.out.println(sorting);
-//		Integer order = 0;
-//		if ("0".equals(sorting)) {
-//			return new ModelAndView("redirect:/product");
-//		} else if ("1".equals(sorting)) {
-//			order = 1;
-//		} else if ("2".equals(sorting)) {
-//			order = -1;
-//		}
-//
-//		ModelAndView mav = new ModelAndView("product");
-//		List<ProductVO> listProduct = productService.listProductByPrice(order);
-//		List<ProductVO> showProduct = new ArrayList<>();
-//		for (ProductVO vo : listProduct) {
-//			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
-//			showProduct.add(vo);
-//		}
-//		mav.addObject("allCategory", categoryService.getAllCategory());
-//		mav.addObject("showProduct", showProduct);
-//		return mav;
-//	}
-	
-	@RequestMapping(value="/sort", method = RequestMethod.POST)
+	// @RequestMapping(value="/sort", method = RequestMethod.POST)
+	// public ModelAndView listProductByPrice(@RequestParam(required = false, name =
+	// "sorting") String sorting) {
+	//
+	// // String sorting = request.getParameter("sorting");
+	// System.out.println(sorting);
+	// Integer order = 0;
+	// if ("0".equals(sorting)) {
+	// return new ModelAndView("redirect:/product");
+	// } else if ("1".equals(sorting)) {
+	// order = 1;
+	// } else if ("2".equals(sorting)) {
+	// order = -1;
+	// }
+	//
+	// ModelAndView mav = new ModelAndView("product");
+	// List<ProductVO> listProduct = productService.listProductByPrice(order);
+	// List<ProductVO> showProduct = new ArrayList<>();
+	// for (ProductVO vo : listProduct) {
+	// vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+	// showProduct.add(vo);
+	// }
+	// mav.addObject("allCategory", categoryService.getAllCategory());
+	// mav.addObject("showProduct", showProduct);
+	// return mav;
+	// }
+
+	// Lấy product theo thứ tự price
+	@RequestMapping(value = "/sort", method = RequestMethod.POST)
 	public ModelAndView listProductByPrice(@ModelAttribute("sort") Sort sort) {
-		
+
 		Integer order = sort.getSortId();
 		if (order == 0) {
 			return new ModelAndView("redirect:/product");
@@ -130,6 +132,47 @@ public class CustomerController {
 		return mav;
 	}
 
+//	// Lấy product theo khoảng giá
+//	@RequestMapping(value = "/priceRange", method = RequestMethod.POST)
+//	public ModelAndView listProductByPriceRange(@RequestParam(required = false, name = "priceLower") String valueLower,
+//			@RequestParam(required = false, name = "priceUpper") String valueUpper) {
+//		System.out.println(valueLower + "-" + valueUpper);
+//		Integer priceLower = Integer.parseInt(valueLower);
+//		Integer priceUpper = Integer.parseInt(valueUpper);
+//		
+//		ModelAndView mav = new ModelAndView("product");
+//		List<ProductVO> listProduct = productService.listProductByPriceRange(priceLower, priceUpper);
+//		List<ProductVO> showProduct = new ArrayList<>();
+//		for (ProductVO vo : listProduct) {
+//			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+//			showProduct.add(vo);
+//		}
+//		mav.addObject("allCategory", categoryService.getAllCategory());
+//		mav.addObject("showProduct", showProduct);
+//		Sort sort = new Sort();
+//		mav.addObject("sort", sort);
+//		return mav;
+//	}
+
+	// Lấy product theo name
+	@RequestMapping(value = "/sortName", method = RequestMethod.POST)
+	public ModelAndView listProductByName(@RequestParam(required = false, name = "search-product") String productName) {
+		System.out.println(productName);
+
+		ModelAndView mav = new ModelAndView("product");
+		List<ProductVO> listProduct = productService.listProductByName(productName);
+		List<ProductVO> showProduct = new ArrayList<>();
+		for (ProductVO vo : listProduct) {
+			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			showProduct.add(vo);
+		}
+		mav.addObject("allCategory", categoryService.getAllCategory());
+		mav.addObject("showProduct", showProduct);
+		Sort sort = new Sort();
+		mav.addObject("sort", sort);
+		return mav;
+	}
+	
 	// Get List Sort
 	@ModelAttribute("sortList")
 	public Map<Integer, String> getSortList() {

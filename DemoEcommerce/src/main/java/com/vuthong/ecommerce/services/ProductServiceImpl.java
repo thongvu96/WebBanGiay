@@ -197,4 +197,48 @@ public class ProductServiceImpl implements ProductService {
 		return productsVo;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.vuthong.ecommerce.services.ProductService#listProductByPriceRange(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<ProductVO> listProductByPriceRange(Integer priceLower, Integer priceUpper) {
+		// TODO Auto-generated method stub
+		List<ProductVO> productsVo = new ArrayList<ProductVO>();
+		List<Product> products = productRepository.listProductByPrice(priceLower, priceUpper);
+		for (Product product : products) {
+			ProductVO vo = new ProductVO();
+			vo.setProductId(product.getProductId());
+			vo.setProductName(product.getProductName());
+			vo.setPrice(product.getPrice());
+			vo.setDescription(product.getDescription());
+//			vo.setImage(product.getImages().get(0).getImage());
+			Category category = product.getCategory();
+			vo.setCategoryName(category.getCategoryName());
+			productsVo.add(vo);
+		}
+		return productsVo;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.vuthong.ecommerce.services.ProductService#listProductByName(java.lang.String)
+	 */
+	@Override
+	public List<ProductVO> listProductByName(String productName) {
+		// TODO Auto-generated method stub
+		List<ProductVO> productsVo = new ArrayList<ProductVO>();
+		List<Product> products = productRepository.listProductByName(productName);
+		for (Product product : products) {
+			ProductVO vo = new ProductVO();
+			vo.setProductId(product.getProductId());
+			vo.setProductName(product.getProductName());
+			vo.setPrice(product.getPrice());
+			vo.setDescription(product.getDescription());
+//			vo.setImage(product.getImages().get(0).getImage());
+			Category category = product.getCategory();
+			vo.setCategoryName(category.getCategoryName());
+			productsVo.add(vo);
+		}
+		return productsVo;
+	}
+
 }

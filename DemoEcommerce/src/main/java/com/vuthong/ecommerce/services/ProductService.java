@@ -31,4 +31,10 @@ public interface ProductService {
 
 	// Lấy listProduct theo thứ tự price
 	public List<ProductVO> listProductByPrice(Integer order);
+	
+	// Lấy listProduct theo khoảng price
+	public List<ProductVO> listProductByPriceRange(Integer priceLower, Integer priceUpper);
+	
+	// Lấy product theo name
+	public List<ProductVO> listProductByName(String productName);
 }

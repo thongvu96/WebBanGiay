@@ -29,11 +29,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	// Lấy product theo khoảng giá
 	final String SELECT_PRODUCT_BY_PRICE = "Select p From Product p Where p.price >=:priceLower AND p.price <=:priceUpper";
-
+	
+	// Tìm kiếm product theo tên
+	final String SELECT_PRODUCT_BY_NAME = "Select p From Product p Where p.productName LIKE CONCAT('%',:productName,'%')";
+	
 	final String SELECT_PRODUCT_BY_CATEGORY_ID = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
 //	final String SELECT_PRODUCT_BY_CATEGORY_ID_SORT_ASC = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
 //	final String SELECT_PRODUCT_BY_CATEGORY_ID_SORT_DESC = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
-
+	
 	// Lấy tất cả các product của 1 category theo categoryId
 	@Query(SELECT_PRODUCT_BY_CATEGORY_ID)
 	List<Product> findProductByCategoryId(@Param("categoryId") Integer categoryId);
@@ -53,4 +56,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	// Lấy product theo khoảng giá
 	@Query(SELECT_PRODUCT_BY_PRICE)
 	List<Product> listProductByPrice(@Param("priceLower") Integer priceLower, @Param("priceUpper") Integer priceUpper);
+	
+	// Lấy product theo name
+	@Query(SELECT_PRODUCT_BY_NAME)
+	List<Product> listProductByName(@Param("productName") String productName);
 }
