@@ -19,9 +19,16 @@ import com.vuthong.ecommerce.entities.Product;
  */
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+	
+	// Lấy tất cả ảnh của 1 product
 	final String SELECT_IMAGE_BY_PRODUCT_ID = "Select i From Image i, Product p Where i.product = p AND p.productId =:productId";
+	
+	// Sắp xếp product theo thứ tự
 	final String SELECT_PRODUCT_BY_PRICE_ASC = "Select p From Product p Order By p.price ASC";
 	final String SELECT_PRODUCT_BY_PRICE_DESC = "Select p From Product p Order By p.price DESC";
+	
+	// Lấy product theo khoảng giá
+	final String SELECT_PRODUCT_BY_PRICE = "Select p From Product p Where p.price >=:priceLower AND p.price <=:priceUpper";
 
 	final String SELECT_PRODUCT_BY_CATEGORY_ID = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
 //	final String SELECT_PRODUCT_BY_CATEGORY_ID_SORT_ASC = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
@@ -42,4 +49,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	// Lấy list Product theo price giảm dần
 	@Query(SELECT_PRODUCT_BY_PRICE_DESC)
 	List<Product> listProductByPriceDESC();
+	
+	// Lấy product theo khoảng giá
+	@Query(SELECT_PRODUCT_BY_PRICE)
+	List<Product> listProductByPrice(@Param("priceLower") Integer priceLower, @Param("priceUpper") Integer priceUpper);
 }
