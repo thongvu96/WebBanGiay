@@ -241,4 +241,13 @@ public class ProductServiceImpl implements ProductService {
 		return productsVo;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.vuthong.ecommerce.services.ProductService#countProduct()
+	 */
+	@Override
+	public int countProduct() {
+		// TODO Auto-generated method stub
+		return productRepository.countProduct();
+	}
+
 }

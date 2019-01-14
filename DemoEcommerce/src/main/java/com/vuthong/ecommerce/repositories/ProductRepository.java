@@ -33,6 +33,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	// Tìm kiếm product theo tên
 	final String SELECT_PRODUCT_BY_NAME = "Select p From Product p Where p.productName LIKE CONCAT('%',:productName,'%')";
 	
+	// Tính tổng số product
+	final String COUNT_PRODUCT = "Select COUNT(p) From Product p";
+	
 	final String SELECT_PRODUCT_BY_CATEGORY_ID = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
 //	final String SELECT_PRODUCT_BY_CATEGORY_ID_SORT_ASC = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
 //	final String SELECT_PRODUCT_BY_CATEGORY_ID_SORT_DESC = "Select p From Category c, Product p Where p.category = c AND c.categoryId =:categoryId";
@@ -60,4 +63,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	// Lấy product theo name
 	@Query(SELECT_PRODUCT_BY_NAME)
 	List<Product> listProductByName(@Param("productName") String productName);
+	
+	// Tính tổng số product
+	@Query(COUNT_PRODUCT)
+	int countProduct();
 }

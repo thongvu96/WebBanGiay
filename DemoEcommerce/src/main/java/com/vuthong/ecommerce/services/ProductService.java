@@ -37,4 +37,7 @@ public interface ProductService {
 	
 	// Lấy product theo name
 	public List<ProductVO> listProductByName(String productName);
+	
+	// Tính tổng số product
+	public int countProduct();
 }

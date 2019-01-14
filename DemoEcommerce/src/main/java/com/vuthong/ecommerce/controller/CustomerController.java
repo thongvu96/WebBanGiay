@@ -158,6 +158,7 @@ public class CustomerController {
 	@RequestMapping(value = "/sortName", method = RequestMethod.POST)
 	public ModelAndView listProductByName(@RequestParam(required = false, name = "search-product") String productName) {
 		System.out.println(productName);
+		System.out.println(productService.countProduct());
 
 		ModelAndView mav = new ModelAndView("product");
 		List<ProductVO> listProduct = productService.listProductByName(productName);
