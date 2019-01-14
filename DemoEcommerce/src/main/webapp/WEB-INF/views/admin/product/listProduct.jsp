@@ -14,9 +14,11 @@
 			<tr>
 				<th>Id</th>
 				<th>Product Name</th>
+				<th>Product Code</th>
 				<th>Category</th>
-				<th>Description</th>
+				<th>Information</th>
 				<th>Price</th>
+				<th>Description</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -27,9 +29,11 @@
 				<tr>
 					<td>${product.productId}</td>
 					<td>${product.productName}</td>
+					<td>${product.productCode}</td>
 					<td>${product.categoryName}</td>
-					<td>${product.description}</td>
+					<td>${product.information}</td>
 					<td>${product.price}</td>
+					<td>${product.description}</td>
 					<td><a
 						href="${pageContext.request.contextPath}/admin/product/edit/${product.productId}"
 						class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit

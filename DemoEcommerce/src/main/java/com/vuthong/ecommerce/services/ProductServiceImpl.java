@@ -7,7 +7,11 @@ package com.vuthong.ecommerce.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.vuthong.ecommerce.entities.Category;
@@ -24,6 +28,9 @@ import com.vuthong.ecommerce.vo.ProductVO;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+	@Autowired
+	private EntityManager entityManager;
+	
 	@Autowired
 	private ProductRepository productRepository;
 	
@@ -43,6 +50,8 @@ public class ProductServiceImpl implements ProductService {
 			vo.setProductName(product.getProductName());
 			vo.setPrice(product.getPrice());
 			vo.setDescription(product.getDescription());
+			vo.setProductCode(product.getProductCode());
+			vo.setInformation(product.getInformation());
 //			vo.setImage(product.getImages().get(0).getImage());
 			Category category = product.getCategory();
 			vo.setCategoryName(category.getCategoryName());
@@ -62,9 +71,11 @@ public class ProductServiceImpl implements ProductService {
 			if (category != null) {
 				Product product = new Product();
 				product.setProductName(vo.getProductName());
+				product.setProductCode(vo.getProductCode());
 				product.setCategory(category);
 				product.setDescription(vo.getDescription());
 				product.setPrice(vo.getPrice());
+				product.setInformation(vo.getInformation());
 				productRepository.save(product);
 				return true;
 			}
@@ -85,9 +96,11 @@ public class ProductServiceImpl implements ProductService {
 			Category category = categoryRepository.getOne(vo.getCategory());
 			if (category != null) {
 				product.setProductName(vo.getProductName());
+				product.setProductCode(vo.getProductCode());
 				product.setCategory(category);
 				product.setDescription(vo.getDescription());
 				product.setPrice(vo.getPrice());
+				product.setInformation(vo.getInformation());
 				productRepository.save(product);
 				return true;
 			}
@@ -123,9 +136,11 @@ public class ProductServiceImpl implements ProductService {
 		ProductVO vo = new ProductVO();
 		vo.setProductId(product.getProductId());
 		vo.setProductName(product.getProductName());
+		vo.setProductCode(product.getProductCode());
 		vo.setCategory(product.getCategory().getCategoryId());
 		vo.setDescription(product.getDescription());
 		vo.setPrice(product.getPrice());
+		vo.setInformation(product.getInformation());
 		
 		return vo;
 	}
@@ -144,9 +159,11 @@ public class ProductServiceImpl implements ProductService {
 			vo.setProductId(product.getProductId());
 			vo.setPrice(product.getPrice());
 			vo.setProductName(product.getProductName());
+			vo.setProductCode(product.getProductCode());
 			vo.setDescription(product.getDescription());
 			Category category = product.getCategory();
 			vo.setCategoryName(category.getCategoryName());
+			vo.setInformation(product.getInformation());
 			listProductVo.add(vo);
 		}
 		return listProductVo;
@@ -187,6 +204,8 @@ public class ProductServiceImpl implements ProductService {
 			ProductVO vo = new ProductVO();
 			vo.setProductId(product.getProductId());
 			vo.setProductName(product.getProductName());
+			vo.setProductCode(product.getProductCode());
+			vo.setInformation(product.getInformation());
 			vo.setPrice(product.getPrice());
 			vo.setDescription(product.getDescription());
 //			vo.setImage(product.getImages().get(0).getImage());
@@ -209,6 +228,8 @@ public class ProductServiceImpl implements ProductService {
 			ProductVO vo = new ProductVO();
 			vo.setProductId(product.getProductId());
 			vo.setProductName(product.getProductName());
+			vo.setProductCode(product.getProductCode());
+			vo.setInformation(product.getInformation());
 			vo.setPrice(product.getPrice());
 			vo.setDescription(product.getDescription());
 //			vo.setImage(product.getImages().get(0).getImage());
@@ -231,6 +252,8 @@ public class ProductServiceImpl implements ProductService {
 			ProductVO vo = new ProductVO();
 			vo.setProductId(product.getProductId());
 			vo.setProductName(product.getProductName());
+			vo.setProductCode(product.getProductCode());
+			vo.setInformation(product.getInformation());
 			vo.setPrice(product.getPrice());
 			vo.setDescription(product.getDescription());
 //			vo.setImage(product.getImages().get(0).getImage());
@@ -248,6 +271,42 @@ public class ProductServiceImpl implements ProductService {
 	public int countProduct() {
 		// TODO Auto-generated method stub
 		return productRepository.countProduct();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.vuthong.ecommerce.services.ProductService#listProductByPageNumber(int, int)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductVO> listProductByPageNumber(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		List<ProductVO> listProductVo = new ArrayList<>();
+		try {
+			int start = (pageNumber - 1) * pageSize;
+			Session session = (Session) entityManager.getDelegate();
+			javax.persistence.Query q = session.createQuery("From Product");
+			q.setFirstResult(start);
+			q.setMaxResults(pageSize);
+			
+			List<Product> listProduct = q.getResultList();
+			for (Product product : listProduct) {
+				ProductVO vo = new ProductVO();
+				vo.setProductId(product.getProductId());
+				vo.setProductName(product.getProductName());
+				vo.setProductCode(product.getProductCode());
+				vo.setInformation(product.getInformation());
+				vo.setPrice(product.getPrice());
+				vo.setDescription(product.getDescription());
+//				vo.setImage(product.getImages().get(0).getImage());
+				Category category = product.getCategory();
+				vo.setCategoryName(category.getCategoryName());
+				listProductVo.add(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return listProductVo;
 	}
 
 }

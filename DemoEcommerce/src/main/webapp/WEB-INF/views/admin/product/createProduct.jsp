@@ -17,6 +17,10 @@
 		<form:input type="text" id="fullname" path="productName" class="form-control" name="fullname"
 			required="required" />
 		<br>
+		<label for="fullname">Product Code * :</label>
+		<form:input type="text" id="productCode" path="productCode" class="form-control" name="productCode"
+			required="required" />
+		<br>
 		<label for="heard">Category *:</label>
 		<form:select id="heard" path="category" class="form-control" required="required">
 			<form:option value="" label="Choose" />
@@ -33,8 +37,14 @@
 			data-parsley-minlength="20" data-parsley-maxlength="5000"
 			data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
 			data-parsley-validation-threshold="10"></form:textarea>
-
-		<br />
+		<br>
+		<label for="message">Information :</label>
+		<form:textarea id="message" path="information" required="required" class="form-control"
+			name="message" data-parsley-trigger="keyup"
+			data-parsley-minlength="0" data-parsley-maxlength="5000"
+			data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+			data-parsley-validation-threshold="10"></form:textarea>
+		<br>
 		<div class="form-group">
 			<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
 				<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/admin/product'">Cancel</button>

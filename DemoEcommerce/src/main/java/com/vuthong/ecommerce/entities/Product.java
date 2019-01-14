@@ -22,68 +22,100 @@ import javax.persistence.Table;
  * @author VuThong
  */
 @Entity
-@Table(name="product")
-public class Product implements Serializable{
+@Table(name = "product")
+public class Product implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="product_id")
+	@Column(name = "product_id")
 	private Integer productId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
-	
-	@Column(name="product_name")
+
+	@Column(name = "product_name")
 	private String productName;
-	
+
+	@Column(name = "product_code")
+	private String productCode;
+
 	private String description;
-	
+
 	private Integer price;
-	
+
+	private String information;
+
 	@OneToMany(mappedBy = "product")
 	private List<Image> images = new ArrayList<>();
-	
+
 	public List<Image> getImages() {
 		return images;
 	}
+
 	public void setImages(List<Image> images) {
 		this.images = images;
 	}
+
 	public Integer getProductId() {
 		return productId;
 	}
+
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
+
 	public Category getCategory() {
 		return category;
 	}
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Integer getPrice() {
 		return price;
 	}
+
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+	public String getInformation() {
+		return information;
+	}
+
+	public void setInformation(String information) {
+		this.information = information;
+	}
+
 }

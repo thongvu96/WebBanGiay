@@ -22,8 +22,10 @@ public class ProductVO implements Serializable {
 	private Integer category;
 	private String categoryName;
 	private String productName;
+	private String productCode;
 	private String description;
 	private Integer price;
+	private String information;
 	private List<ImageVO> imagesVo = new ArrayList<>();
 	private String image;
 
@@ -89,6 +91,22 @@ public class ProductVO implements Serializable {
 
 	public void setPrice(Integer price) {
 		this.price = price;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+	public String getInformation() {
+		return information;
+	}
+
+	public void setInformation(String information) {
+		this.information = information;
 	}
 
 }

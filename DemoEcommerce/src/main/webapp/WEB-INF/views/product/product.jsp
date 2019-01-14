@@ -3,19 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js">
-	function priceRange(){
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.js">
+	function priceRange() {
 		var priceLower = document.getElementById("value-lower").innerHTML;
 		var priceUpper = document.getElementById("value-upper").innerHTML;
-		
+
 		$('#priceLower').html(priceLower);
 		$('#priceUpper').html(priceUpper);
-	}	
-	
+	}
+
 	$("#value-lower, #value-upper").change(priceRange);
-	
-	priceRange();	
-	
+
+	priceRange();
 </script>
 
 <!-- Title Page -->
@@ -48,7 +48,7 @@
 					</ul>
 
 					<!--  -->
-		<%-- 			<h4 class="m-text14 p-b-32">Filters</h4>
+					<%-- 			<h4 class="m-text14 p-b-32">Filters</h4>
 					<form action="${pageContext.request.contextPath}/priceRange" method="post">
 					<div class="filter-price p-t-22 p-b-50 bo3">
 						<div class="m-text15 p-b-17">Price</div>
@@ -119,15 +119,18 @@
 							</li>
 						</ul>
 					</div> --%>
-					<form action="${pageContext.request.contextPath}/sortName" method="post">
-					<div class="search-product pos-relative bo4 of-hidden">
-						<input class="s-text7 size6 p-l-23 p-r-50" type="text" id="search-product"
-							name="search-product" placeholder="Search Products...">
+					<form action="${pageContext.request.contextPath}/sortName"
+						method="post">
+						<div class="search-product pos-relative bo4 of-hidden">
+							<input class="s-text7 size6 p-l-23 p-r-50" type="text"
+								id="search-product" name="search-product"
+								placeholder="Search Products...">
 
-						<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4" type="submit">
-							<i class="fs-12 fa fa-search" aria-hidden="true"></i>
-						</button>
-					</div>
+							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4"
+								type="submit">
+								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -207,9 +210,11 @@
 
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
-						<a href="#"
-							class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+						<c:forEach begin="1" end="${totalPage}" varStatus="status">
+							<a href="${pageContext.request.contextPath}/page/${status.count}"
+								class="item-pagination flex-c-m trans-0-4 active-pagination">${status.count}</a>
+						</c:forEach>
+
 					</div>
 				</div>
 			</div>

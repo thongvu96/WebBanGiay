@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.antMatchers("/category").permitAll()
 		.antMatchers("/category/**").permitAll()
 		.antMatchers("/product").permitAll()
+		.antMatchers("/product/**").permitAll()
 		.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()
 		.and()
 			.csrf().disable()
@@ -63,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/includes/**", "/vendor/**");
 	}
 
 }

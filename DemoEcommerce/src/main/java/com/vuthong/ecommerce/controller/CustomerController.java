@@ -45,7 +45,9 @@ public class CustomerController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping("/product")
+	private int pageSize = 12;
+
+	@RequestMapping(value = {"/product", "/product/"})
 	public ModelAndView listProduct() {
 		ModelAndView mav = new ModelAndView("product");
 		List<ProductVO> listProduct = productService.getAllProduct();
@@ -59,6 +61,17 @@ public class CustomerController {
 
 		Sort sort = new Sort();
 		mav.addObject("sort", sort);
+
+		int selectTotal = productService.countProduct();
+		
+		System.out.println(selectTotal);
+		int temp = (selectTotal % pageSize > 0) ? 1 : 0;
+		int totalPage = selectTotal / pageSize + temp;
+
+		mav.addObject("totalPage", totalPage);
+		
+		System.out.println(totalPage);
+
 		return mav;
 	}
 
@@ -132,27 +145,29 @@ public class CustomerController {
 		return mav;
 	}
 
-//	// Lấy product theo khoảng giá
-//	@RequestMapping(value = "/priceRange", method = RequestMethod.POST)
-//	public ModelAndView listProductByPriceRange(@RequestParam(required = false, name = "priceLower") String valueLower,
-//			@RequestParam(required = false, name = "priceUpper") String valueUpper) {
-//		System.out.println(valueLower + "-" + valueUpper);
-//		Integer priceLower = Integer.parseInt(valueLower);
-//		Integer priceUpper = Integer.parseInt(valueUpper);
-//		
-//		ModelAndView mav = new ModelAndView("product");
-//		List<ProductVO> listProduct = productService.listProductByPriceRange(priceLower, priceUpper);
-//		List<ProductVO> showProduct = new ArrayList<>();
-//		for (ProductVO vo : listProduct) {
-//			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
-//			showProduct.add(vo);
-//		}
-//		mav.addObject("allCategory", categoryService.getAllCategory());
-//		mav.addObject("showProduct", showProduct);
-//		Sort sort = new Sort();
-//		mav.addObject("sort", sort);
-//		return mav;
-//	}
+	// // Lấy product theo khoảng giá
+	// @RequestMapping(value = "/priceRange", method = RequestMethod.POST)
+	// public ModelAndView listProductByPriceRange(@RequestParam(required = false,
+	// name = "priceLower") String valueLower,
+	// @RequestParam(required = false, name = "priceUpper") String valueUpper) {
+	// System.out.println(valueLower + "-" + valueUpper);
+	// Integer priceLower = Integer.parseInt(valueLower);
+	// Integer priceUpper = Integer.parseInt(valueUpper);
+	//
+	// ModelAndView mav = new ModelAndView("product");
+	// List<ProductVO> listProduct =
+	// productService.listProductByPriceRange(priceLower, priceUpper);
+	// List<ProductVO> showProduct = new ArrayList<>();
+	// for (ProductVO vo : listProduct) {
+	// vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+	// showProduct.add(vo);
+	// }
+	// mav.addObject("allCategory", categoryService.getAllCategory());
+	// mav.addObject("showProduct", showProduct);
+	// Sort sort = new Sort();
+	// mav.addObject("sort", sort);
+	// return mav;
+	// }
 
 	// Lấy product theo name
 	@RequestMapping(value = "/sortName", method = RequestMethod.POST)
@@ -173,7 +188,28 @@ public class CustomerController {
 		mav.addObject("sort", sort);
 		return mav;
 	}
-	
+
+	// Phân trang
+	@RequestMapping(value = "/page/{pageNumber}", method = RequestMethod.GET)
+	public ModelAndView paginationProduct(@PathVariable("pageNumber") int pageNumber) {
+		ModelAndView mav = new ModelAndView("product");
+
+		List<ProductVO> listProduct = productService.listProductByPageNumber(pageNumber, pageSize);
+		System.out.println(listProduct.size());
+		List<ProductVO> showProduct = new ArrayList<>();
+		for (ProductVO vo : listProduct) {
+			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			showProduct.add(vo);
+		}
+		mav.addObject("allCategory", categoryService.getAllCategory());
+		mav.addObject("showProduct", showProduct);
+
+		Sort sort = new Sort();
+		mav.addObject("sort", sort);
+
+		return mav;
+	}
+
 	// Get List Sort
 	@ModelAttribute("sortList")
 	public Map<Integer, String> getSortList() {

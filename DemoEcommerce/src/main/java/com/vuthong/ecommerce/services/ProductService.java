@@ -40,4 +40,7 @@ public interface ProductService {
 	
 	// Tính tổng số product
 	public int countProduct();
+	
+	// Phân trang
+	public List<ProductVO> listProductByPageNumber(int pageNumber, int pageSize);
 }
