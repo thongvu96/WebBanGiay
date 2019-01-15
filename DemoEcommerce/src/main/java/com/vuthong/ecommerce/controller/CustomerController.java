@@ -45,12 +45,13 @@ public class CustomerController {
 	@Autowired
 	private CategoryService categoryService;
 
-	private int pageSize = 12;
+	private int pageSize = 6;
 
-	@RequestMapping(value = {"/product", "/product/"})
+	@RequestMapping(value = { "/product", "/product/" })
 	public ModelAndView listProduct() {
 		ModelAndView mav = new ModelAndView("product");
-		List<ProductVO> listProduct = productService.getAllProduct();
+		// List<ProductVO> listProduct = productService.getAllProduct();
+		List<ProductVO> listProduct = productService.listProductByPageNumber(1, pageSize);
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProduct) {
 			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
@@ -63,13 +64,13 @@ public class CustomerController {
 		mav.addObject("sort", sort);
 
 		int selectTotal = productService.countProduct();
-		
+
 		System.out.println(selectTotal);
 		int temp = (selectTotal % pageSize > 0) ? 1 : 0;
 		int totalPage = selectTotal / pageSize + temp;
 
 		mav.addObject("totalPage", totalPage);
-		
+
 		System.out.println(totalPage);
 
 		return mav;
@@ -190,7 +191,7 @@ public class CustomerController {
 	}
 
 	// Phân trang
-	@RequestMapping(value = "/page/{pageNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{pageNumber}", method = RequestMethod.GET)
 	public ModelAndView paginationProduct(@PathVariable("pageNumber") int pageNumber) {
 		ModelAndView mav = new ModelAndView("product");
 
@@ -206,6 +207,16 @@ public class CustomerController {
 
 		Sort sort = new Sort();
 		mav.addObject("sort", sort);
+
+		int selectTotal = productService.countProduct();
+
+		System.out.println(selectTotal);
+		int temp = (selectTotal % pageSize > 0) ? 1 : 0;
+		int totalPage = selectTotal / pageSize + temp;
+
+		mav.addObject("totalPage", totalPage);
+
+		System.out.println(totalPage);
 
 		return mav;
 	}

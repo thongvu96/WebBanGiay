@@ -211,7 +211,7 @@
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
 						<c:forEach begin="1" end="${totalPage}" varStatus="status">
-							<a href="${pageContext.request.contextPath}/page/${status.count}"
+							<a href="${pageContext.request.contextPath}/${status.count}"
 								class="item-pagination flex-c-m trans-0-4 active-pagination">${status.count}</a>
 						</c:forEach>
 
