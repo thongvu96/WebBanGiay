@@ -20,7 +20,7 @@
 
 <!-- Title Page -->
 <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m"
-	style="background-image: url(images/heading-pages-02.jpg);">
+	style="background-image: url(${pageContext.request.contextPath}/images/heading-pages-02.jpg);">
 	<h2 class="l-text2 t-center">Women</h2>
 	<p class="m-text13 t-center">New Arrivals Women Collection 2018</p>
 </section>
@@ -42,7 +42,7 @@
 						<c:forEach items="${allCategory}" var="category"
 							varStatus="status">
 							<li class="p-t-4"><a
-								href="${pageContext.request.contextPath}/${category.categoryId}"
+								href="${pageContext.request.contextPath}/product/category/${category.categoryId}"
 								class="s-text13"> ${category.categoryName} </a></li>
 						</c:forEach>
 					</ul>
@@ -119,7 +119,7 @@
 							</li>
 						</ul>
 					</div> --%>
-					<form action="${pageContext.request.contextPath}/sortName"
+					<form action="${pageContext.request.contextPath}/product/sortName"
 						method="post">
 						<div class="search-product pos-relative bo4 of-hidden">
 							<input class="s-text7 size6 p-l-23 p-r-50" type="text"
@@ -138,7 +138,7 @@
 			<div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
 				<!--  -->
 				<div class="flex-sb-m flex-w p-b-35">
-					<form:form action="${pageContext.request.contextPath}/sort"
+					<form:form action="${pageContext.request.contextPath}/product/sort"
 						modelAttribute="sort" method="post">
 						<div class="flex-w">
 							<div
@@ -211,7 +211,7 @@
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
 						<c:forEach begin="1" end="${totalPage}" varStatus="status">
-							<a href="${pageContext.request.contextPath}/${status.count}"
+							<a href="${pageContext.request.contextPath}/product/page/${status.count}"
 								class="item-pagination flex-c-m trans-0-4 active-pagination">${status.count}</a>
 						</c:forEach>
 

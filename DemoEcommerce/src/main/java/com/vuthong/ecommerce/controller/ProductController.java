@@ -34,7 +34,8 @@ import com.vuthong.ecommerce.vo.Sort;
  * @author VuThong
  */
 @Controller
-public class CustomerController {
+@RequestMapping("/product")
+public class ProductController {
 
 	@Autowired
 	private ProductService productService;
@@ -45,9 +46,9 @@ public class CustomerController {
 	@Autowired
 	private CategoryService categoryService;
 
-	private int pageSize = 6;
+	private int pageSize = 9;
 
-	@RequestMapping(value = { "/product", "/product/" })
+	@RequestMapping(value = { "/", "" })
 	public ModelAndView listProduct() {
 		ModelAndView mav = new ModelAndView("product");
 		// List<ProductVO> listProduct = productService.getAllProduct();
@@ -76,7 +77,7 @@ public class CustomerController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/{id}")
+	@RequestMapping(value = "/category/{id}")
 	public ModelAndView listProductByCategory(@PathVariable(value = "id") Integer categoryId) {
 		ModelAndView mav = new ModelAndView("product");
 		List<ProductVO> listProductVo = productService.findProductByCategoryId(categoryId);
@@ -191,7 +192,7 @@ public class CustomerController {
 	}
 
 	// Phân trang
-	@RequestMapping(value = "/{pageNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/page/{pageNumber}", method = RequestMethod.GET)
 	public ModelAndView paginationProduct(@PathVariable("pageNumber") int pageNumber) {
 		ModelAndView mav = new ModelAndView("product");
 
