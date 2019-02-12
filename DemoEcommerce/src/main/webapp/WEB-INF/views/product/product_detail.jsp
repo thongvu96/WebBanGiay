@@ -1,4 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!-- breadcrumb -->
 <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
 	<a href="index.html" class="s-text16"> Home <i
@@ -18,29 +21,13 @@
 				<div class="wrap-slick3-dots"></div>
 
 				<div class="slick3">
-					<div class="item-slick3" data-thumb="images/Men/1/product_detail_1.jpg">
-						<div class="wrap-pic-w">
-							<img src="images/Men/1/product_detail_1.jpg" alt="IMG-PRODUCT">
+					<c:forEach items="${listImage}" var="image">
+						<div class="item-slick3" data-thumb="${pageContext.request.contextPath}/${image.image}">
+							<div class="wrap-pic-w">
+								<img src="${pageContext.request.contextPath}/${image.image}" alt="IMG-PRODUCT">
+							</div>
 						</div>
-					</div>
-
-					<div class="item-slick3" data-thumb="images/Men/1/product_detail_2.jpg">
-						<div class="wrap-pic-w">
-							<img src="images/Men/1/product_detail_2.jpg" alt="IMG-PRODUCT">
-						</div>
-					</div>
-
-					<div class="item-slick3" data-thumb="images/thumb-item-03.jpg">
-						<div class="wrap-pic-w">
-							<img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-						</div>
-					</div>
-
-					<div class="item-slick3" data-thumb="images/1.jpg">
-						<div class="wrap-pic-w">
-							<img src="images/1.jpg" alt="IMG-PRODUCT">
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

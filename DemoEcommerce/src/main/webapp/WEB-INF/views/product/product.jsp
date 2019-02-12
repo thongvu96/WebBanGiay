@@ -197,7 +197,7 @@
 									</div>
 
 									<div class="block2-txt p-t-20">
-										<a href="product-detail.html"
+										<a href="${pageContext.request.contextPath}/product/${product.productName}/${product.productId}"
 											class="block2-name dis-block s-text3 p-b-5">${product.productName }</a>
 										<span class="block2-price m-text6 p-r-5">$${product.price
 											}</span>

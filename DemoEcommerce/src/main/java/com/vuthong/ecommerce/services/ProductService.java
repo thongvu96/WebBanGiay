@@ -27,7 +27,7 @@ public interface ProductService {
 	public List<ProductVO> findProductByCategoryId(Integer categoryId);
 
 	// Tìm ảnh qua productID
-	public List<ImageVO> findImageByProductId(ProductVO productVo);
+	public List<ImageVO> findImageByProductId(Integer productId);
 
 	// Lấy listProduct theo thứ tự price
 	public List<ProductVO> listProductByPrice(Integer order);

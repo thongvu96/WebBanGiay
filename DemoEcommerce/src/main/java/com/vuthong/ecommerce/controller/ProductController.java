@@ -48,6 +48,7 @@ public class ProductController {
 
 	private int pageSize = 9;
 
+	// Lấy tất cả sản phẩm
 	@RequestMapping(value = { "/", "" })
 	public ModelAndView listProduct() {
 		ModelAndView mav = new ModelAndView("product");
@@ -55,7 +56,7 @@ public class ProductController {
 		List<ProductVO> listProduct = productService.listProductByPageNumber(1, pageSize);
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProduct) {
-			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
 			showProduct.add(vo);
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
@@ -76,14 +77,15 @@ public class ProductController {
 
 		return mav;
 	}
-
+	
+	// Lấy product theo loại
 	@RequestMapping(value = "/category/{id}")
 	public ModelAndView listProductByCategory(@PathVariable(value = "id") Integer categoryId) {
 		ModelAndView mav = new ModelAndView("product");
 		List<ProductVO> listProductVo = productService.findProductByCategoryId(categoryId);
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProductVo) {
-			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
 			showProduct.add(vo);
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
@@ -138,7 +140,7 @@ public class ProductController {
 		List<ProductVO> listProduct = productService.listProductByPrice(order);
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProduct) {
-			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
 			showProduct.add(vo);
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
@@ -181,7 +183,7 @@ public class ProductController {
 		List<ProductVO> listProduct = productService.listProductByName(productName);
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProduct) {
-			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
 			showProduct.add(vo);
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
@@ -200,7 +202,7 @@ public class ProductController {
 		System.out.println(listProduct.size());
 		List<ProductVO> showProduct = new ArrayList<>();
 		for (ProductVO vo : listProduct) {
-			vo.setImage(productService.findImageByProductId(vo).get(0).getImage());
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
 			showProduct.add(vo);
 		}
 		mav.addObject("allCategory", categoryService.getAllCategory());
@@ -232,5 +234,17 @@ public class ProductController {
 		sortList.put(2, "Price: high to low");
 
 		return sortList;
+	}
+	
+	// Xem chi tiết sản phẩm
+	@RequestMapping(value = "/{productName}/{productId}")
+	public ModelAndView productDetail(@PathVariable("productId") Integer productId) {
+		ModelAndView mav = new ModelAndView("productDetail");
+		ProductVO vo = productService.findProductById(productId);
+		List<ImageVO> listImage = productService.findImageByProductId(productId);
+		
+		mav.addObject("productVo", vo);
+		mav.addObject("listImage", listImage);
+		return mav;
 	}
 }

@@ -173,10 +173,10 @@ public class ProductServiceImpl implements ProductService {
 	 * @see com.vuthong.ecommerce.services.ProductService#findImageByProductId(java.lang.Integer)
 	 */
 	@Override
-	public List<ImageVO> findImageByProductId(ProductVO productVo) {
+	public List<ImageVO> findImageByProductId(Integer productId) {
 		// TODO Auto-generated method stub
 		
-		List<Image> listImage = productRepository.findImageByProductId(productVo.getProductId());
+		List<Image> listImage = productRepository.findImageByProductId(productId);
 		List<ImageVO> listImageVo = new ArrayList<>();
 		for (Image image : listImage) {
 			ImageVO vo = new ImageVO();
