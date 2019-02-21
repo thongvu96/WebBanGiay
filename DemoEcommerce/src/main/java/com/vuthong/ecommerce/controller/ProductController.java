@@ -240,11 +240,19 @@ public class ProductController {
 	@RequestMapping(value = "/{productName}/{productId}")
 	public ModelAndView productDetail(@PathVariable("productId") Integer productId) {
 		ModelAndView mav = new ModelAndView("productDetail");
+		List<ProductVO> listVo = new ArrayList<>();
 		ProductVO vo = productService.findProductById(productId);
+		listVo.add(vo);
 		List<ImageVO> listImage = productService.findImageByProductId(productId);
 		
-		mav.addObject("productVo", vo);
+		mav.addObject("listVo", listVo);
 		mav.addObject("listImage", listImage);
 		return mav;
+	}
+	
+	@ModelAttribute("listProductVo")
+	public List<ProductVO> listProductVo(){
+		List<ProductVO> listProductVo = productService.getAllProduct();
+		return listProductVo;
 	}
 }

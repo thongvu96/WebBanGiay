@@ -142,6 +142,9 @@ public class ProductServiceImpl implements ProductService {
 		vo.setPrice(product.getPrice());
 		vo.setInformation(product.getInformation());
 		
+		Category category = product.getCategory();
+		vo.setCategoryName(category.getCategoryName());
+		
 		return vo;
 	}
 
