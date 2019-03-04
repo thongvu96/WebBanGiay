@@ -253,6 +253,13 @@ public class ProductController {
 	@ModelAttribute("listProductVo")
 	public List<ProductVO> listProductVo(){
 		List<ProductVO> listProductVo = productService.getAllProduct();
-		return listProductVo;
+		
+		List<ProductVO> showProduct = new ArrayList<>();
+		for (ProductVO vo : listProductVo) {
+			vo.setImage(productService.findImageByProductId(vo.getProductId()).get(0).getImage());
+			showProduct.add(vo);
+		}
+		
+		return showProduct;
 	}
 }
